@@ -11,7 +11,7 @@ use App\Models\Show;
 use App\Models\Seat;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Models\Comment;
+use App\Models\Action;
 use Illuminate\Support\Facades\Storage;
 
 class FilmController extends Controller
@@ -61,11 +61,18 @@ public function store(Request $request)
     ]);
    $edit=$request->input('editable');
   $value=0;
+  $currentDate = Carbon::now()->format('Y-m-d'); 
+
+  $numberOfWeeks = 2;
+  $newDate = $currentDate->addWeeks($numberOfWeeks)->format('Y-m-d'); 
+  
+
+  if($data['release_date'] <= $currentDate && $currentDate < $newDate ){
   if($edit == 'no'){
     $value = 0 ;
     
     $fil_check=Film::where('name',$data['name'])->first();
-
+    
     if (!$fil_check){
         
     $film = Film::create([
@@ -113,6 +120,10 @@ else {
     return redirect('/employee/film/create')->with('error', 'Invalid date range.');
 }
   }
+}
+else{
+    return redirect('/');
+}
     $geners = $request->input('gener', []);
     $film->Genres()->attach($geners);
 
@@ -162,7 +173,8 @@ public function show($id){
     ->get();
     
     
-    $comments=Comment::where('F_id',$id)->get();
+    $comments=film::join('commenting','commenting.F_id','=','films.F_id')
+    ->where('commenting.F_id',$id)->get();
     
 
    

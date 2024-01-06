@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\FilmController::class,'welcome_films'])->name('welcome');
 Route::get('/film/filter', [App\Http\Controllers\FilmController::class,'filterbygener'])->name('film.filter');
-Route::post('/film/comment/{F_id}',[App\Http\Controllers\CommentController::class,'store'])->name('comment.store');
 // Route::post('/film/upload',[App\Http\Controllers\FilmController::class,'upload'])->name('film.upload');
 Route::get('/film/search',[App\Http\Controllers\SearchController::class,'searchFilm'])->name('search.resaults');
 Route::get('/film/{id}',[App\Http\Controllers\FilmController::class,'show'])->name('film.show');
@@ -25,13 +24,13 @@ Route::middleware(['admin'])->group(function () {
 
     // Employee Routes
     Route::get('/admin/employees/create', [App\Http\Controllers\EmployeerController::class, 'createEmp'])->name('employee.create');
-    Route::post('/admin/employees', [App\Http\Controllers\EmployeerController::class, 'storeEm'])->name('employee.store');
+    Route::post('/admin/employees/store', [App\Http\Controllers\EmployeerController::class, 'storeEm'])->name('employee.store');
     Route::get('/admin/employees', [App\Http\Controllers\EmployeerController::class, 'showEmp'])->name('employee.show');
     Route::delete('/admin/employees/{id}', [App\Http\Controllers\EmployeerController::class, 'deleteEmp'])->name('employee.delete');
     
     // Manager Routes
-    Route::get('/admin/managers/create', [App\Http\Controllers\EmployeerController::class, 'createMan'])->name('manager.create');
-    Route::post('/admin/managers', [App\Http\Controllers\EmployeerController::class, 'storeMan'])->name('manager.store'); 
+    // Route::get('/admin/managers/create', [App\Http\Controllers\EmployeerController::class, 'createMan'])->name('manager.create');
+    // Route::post('/admin/managers', [App\Http\Controllers\EmployeerController::class, 'storeMan'])->name('manager.store'); 
     Route::get('/admin/employees/search', [App\Http\Controllers\SearchController::class, 'searchEmp'])->name('employee.resaults');
     Route::delete('/admin/employees/search/{id}', [App\Http\Controllers\EmployeerController::class, 'deleteEmp'])->name('search.delete');
 
@@ -124,14 +123,15 @@ Route::get('film/booking/{SHT_id}/{H_id}/{age}',[App\Http\Controllers\BookingCon
 Route::post('film/booking/store/{SHT_id}',[App\Http\Controllers\BookingController::class,'submitjob'])->name('booking.submitjob');
 Route::get('customer/wallet/create',[App\Http\Controllers\EwalletController::class, 'create'])->name('wallet.create');
 Route::post('customer/wallet/store',[App\Http\Controllers\EwalletController::class,'store'])->name('wallet.store');
-Route::post('/rate',[App\Http\Controllers\RateController::class,'Rate'])->name('rate.app');
-Route::post('/rate/film/{F_id}',[App\Http\Controllers\RateController::class,'RateFilm'])->name('rate.film');
+Route::post('/film/comment/{F_id}',[App\Http\Controllers\CommentingController::class,'store_comment'])->name('comment.store');
+Route::post('/rate',[App\Http\Controllers\RatingController::class,'Rate'])->name('rate.app');
+Route::post('/rate/film/{F_id}',[App\Http\Controllers\RatingController::class,'RateFilm'])->name('rate.film');
 Route::get('/bookings',[App\Http\Controllers\BookingController::class,'index'])->name('booking.index');
 Route::get('/bookings/update/{B_id}',[App\Http\Controllers\BookingController::class,'update'])->name('booking.update');
 Route::delete('/bookings/delete/{B_id}/{F_id}',[App\Http\Controllers\BookingController::class,'delete'])->name('booking.delete');
 Route::get('/bookings/edit/{B_id}/{SHT_id}/{H_id}/{F_id}',[App\Http\Controllers\BookingController::class,'edit'])->name('booking.edit');
 Route::put('/bookings/update/{B_id}/{H_id}/{SHT_id}/{F_id}',[App\Http\Controllers\BookingController::class,'update'])->name('booking.update');
-
+Route::get('/bookings/Ticket/{B_id}/{SH_id}/{SHT_id}/{F_id}/{H_id}',[App\Http\Controllers\BookingController::class,'Ticket'])->name('booking.Ticket');
 
 
 });

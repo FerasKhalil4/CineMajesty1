@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Film;
-use App\Models\Customer;
-use Illuminate\Http\Request;
 
-class CommentController extends Controller
+use Illuminate\Http\Request;
+use App\Models\Customer;
+use App\Models\Film;
+
+class CommentingController extends Controller
 {
-   
-    public function store(request $request,$F_id){
+    public function store_comment(request $request,$F_id){
         if(auth()->user()){
         if ($request->input()){
             $email = auth()->user()->email;
@@ -17,7 +17,7 @@ class CommentController extends Controller
             $comment=$request->input('comment');
             $film=Film::find($F_id);
             if($C_id && $film){
-                $film->Comments()->attach($C_id,['comments'=>$comment]);
+                $film->comments()->attach($C_id,['comment'=>$comment]);
                  return redirect('/');         
             }
         }
@@ -26,4 +26,5 @@ class CommentController extends Controller
             return redirect('login');
         }
     }
+
 }

@@ -13,21 +13,23 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
-           
+        Schema::create('commenting', function (Blueprint $table) {
             $table->bigIncrements('CO_id');
-            $table->unsignedBigInteger('C_id'); // Assuming this is a foreign key to the snack table
-            $table->unsignedBigInteger('F_id'); // Assuming this is a foreign key to the booking table
-            $table->text('comments');
-            $table->timestamps();
-            $table->foreign('F_id')
-            ->references('F_id') // Match the column name in the role table
-            ->on('films')
-            ->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('C_id');
+            $table->unsignedBigInteger('F_id');
+            $table->text('comment');
+            
             $table->foreign('C_id')
             ->references('C_id') // Match the column name in the role table
             ->on('customers')
             ->onDelete('cascade')->onUpdate('cascade');
+
+            $table->foreign('F_id')
+            ->references('F_id') // Match the column name in the role table
+            ->on('films')
+            ->onDelete('cascade')->onUpdate('cascade');
+            
+            $table->timestamps();
         });
     }
 
@@ -38,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('commenting');
     }
 };

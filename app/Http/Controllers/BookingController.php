@@ -6,6 +6,7 @@ use App\Models\Snack;
 use App\Models\Booking;
 use App\Models\Hall;
 use App\Models\Showtime;
+use App\Models\Show;
 use App\Models\SeatShowtime ;
 use App\Models\Customer ;
 use App\Models\Ticket ;
@@ -36,10 +37,34 @@ class BookingController extends Controller
     ->distinct('bookings.B_id')
     ->where('bookings.C_id', $C_id)
     ->get();
-   
-   
-    return view('booking.index',compact('bookings'));
+  
+    $current_time=Carbon::now() ->format('H:i:s');
+    $currentDate = Carbon::now() ->format('Y-m-d');
+ 
+    return view('booking.index',compact('bookings','currentDate','current_time'));
 
+  }
+  public function Ticket($F_id,$SHT_id,$SH_id,$B_id,$H_id){
+    if($F_id && $SHT_id && $SH_id && $B_id){
+      $film=Film::find($F_id);
+      $showtime=Showtime::find($SHT_id);
+      $show=Show::find($SH_id);
+      $booking=Booking::find($B_id);
+      $hall=Hall::find($H_id);
+      $seats=Booking::join('seat_showtime','seat_showtime.B_id','=','bookings.B_id')
+      ->join('seats','seats.SE_id','=','seat_showtime.SE_id')
+      ->where('seat_showtime.B_id',$B_id)
+      ->select('seats.*','seat_showtime.*')
+      ->get();
+      $snacks=Snack::join('book_snack','book_snack.S_id','=','snacks.S_id')
+      ->where('book_snack.B_id',$B_id)->get();
+    
+
+      return view('booking.Ticket',compact('film','showtime','show','booking','hall','seats','snacks'));
+    }
+    else{
+      return redirect('/');
+    }
   }
   public function show($SHT_id,$H_id,$age)
     {

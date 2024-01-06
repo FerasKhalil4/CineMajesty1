@@ -20,15 +20,19 @@ class Film extends Model
         return $this->belongstomany(Genre::class,'film_genre','F_id','G_id');
     }
     
-    public function Rates(){
+    public function rates(){
 
-        return $this->belongstomany(Rate::class,'rates','F_id','C_id');
+        return $this->belongstomany(Customer::class,'rating','F_id','C_id');
     }
 
-    public function Comments(){
+      
+    public function comments(){
 
-        return $this->belongstomany(Comment::class,'comments','F_id','C_id');
+        return $this->belongstomany(Customer::class,'commenting','F_id','C_id');
     }
+
+
+   
 
     public function Shows(){
 

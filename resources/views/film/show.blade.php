@@ -44,6 +44,6 @@
 </form>
  
 @foreach($comments as $comment)
-{{$comment->comments}} <br>
+{{$comment->comment}} <br>
 @endforeach
 @endsection

@@ -21,7 +21,14 @@
             <tr>
           
                 <td>
+   
+   
+
+                    @if($booking->start_date >= $currentDate && $booking->start_time >= $current_time)
+                    <td><a href="{{ route('booking.Ticket', ['H_id' => $booking->H_id, 'B_id' => $booking->B_id, 'F_id' => $booking->F_id, 'SHT_id' => $booking->SHT_id, 'SH_id' => $booking->SH_id]) }}">{{ $booking->B_id }}</a></td>
+                    @else
                 <td>{{ $booking->B_id }}</td>
+                @endif
                 <td>{{ $booking->name }}</td>
               
                 <td>{{ $booking->start_date}}</td>

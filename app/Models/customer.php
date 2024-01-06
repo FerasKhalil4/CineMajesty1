@@ -20,14 +20,16 @@ class Customer extends Model
         return $this->hasMany(Booking::class,'C_id','C_id');
     }
 
-    public function Rates(){
+    public function rates(){
 
-        return $this->belongstomany(Rate::class,'rates','C_id','F_id');
+        return $this->belongstomany(Film::class,'rating','C_id','F_id');
     }
-    public function Comments(){
+  
+    public function comments(){
 
-        return $this->belongstomany(Comment::class,'comments','C_id','F_id');
+        return $this->belongstomany(Film::class,'commenting','C_id','F_id');
     }
+
     public function Wallet(){
 
         return $this->hasOne(Wallet::class,'C_id','C_id');
